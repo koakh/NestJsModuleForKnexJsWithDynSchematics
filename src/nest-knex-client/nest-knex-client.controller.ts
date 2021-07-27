@@ -1,23 +1,25 @@
-/**
- *  NestKnexClientController is a testing controller that verifies that
- *  NestKnexModule was generated properly.
- *
- *  You can quickly verify this by running `npm run start:dev`, and then
- *  connecting to `http://localhost:3000` with your browser.  It should return
- *  a custom message like `Hello from NestKnexModule`.
- *
- *  Once you begin customizing NestKnexModule, you'll probably want
- *  to delete this controller.
- */
-import { Controller, Get } from '@nestjs/common';
-import { NestKnexService } from '../nest-knex.service';
+import { Controller, Inject, Get } from '@nestjs/common';
+import { KNEX_CONNECTION } from '../constants';
 
 @Controller()
 export class NestKnexClientController {
-  constructor(private readonly nestKnexService: NestKnexService) {}
+  // new
+  constructor(@Inject(KNEX_CONNECTION) private readonly knex) {}
+  // old
+  // constructor(private readonly nestKnexService: NestKnexService) {}
 
   @Get()
-  index() {
-    return this.nestKnexService.test();
+  async index() {
+    // following line no longer needed
+    // const knex = this.nestKnexService.getKnex();
+    const newcat = await this.knex('cats').insert({
+      name: 'Fred',
+      age: 5,
+      breed: 'tom cat',
+    });
+
+    const cats = await this.knex.select('*').from('cats');
+
+    return cats;
   }
 }

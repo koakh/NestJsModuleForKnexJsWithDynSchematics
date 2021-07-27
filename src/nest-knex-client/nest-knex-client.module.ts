@@ -15,6 +15,33 @@ import { NestKnexModule } from '../nest-knex.module';
 
 @Module({
   controllers: [NestKnexClientController],
-  imports: [NestKnexModule.register({})],
+  imports: [
+    // NestKnexModule.register({
+    //   client: 'pg',
+    //   connection: {
+    //     host: 'localhost',
+    //     user: 'postgres',
+    //     password: 'example',
+    //     database: 'example',
+    //     port: 5432,
+    //   },
+    // }),
+    // Dynamic Registration (with a Config Factory)
+    NestKnexModule.registerAsync({
+      useFactory: () => {
+        return {
+          debug: false,
+          client: 'pg',
+          connection: {
+            host: 'localhost',
+            user: 'postgres',
+            password: 'example',
+            database: 'example',
+            port: 5432,
+          },
+        };
+      },
+    }),
+  ],
 })
-export class NestKnexClientModule {}
+export class NestKnexClientModule { }

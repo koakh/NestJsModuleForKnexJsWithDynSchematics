@@ -1,2 +1,3 @@
-export interface NestKnexOptions {
+import { Knex } from 'knex';
+export interface NestKnexOptions extends Knex.Config {
 }

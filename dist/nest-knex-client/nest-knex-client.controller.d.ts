@@ -1,6 +1,5 @@
-import { NestKnexService } from '../nest-knex.service';
 export declare class NestKnexClientController {
-    private readonly nestKnexService;
-    constructor(nestKnexService: NestKnexService);
+    private readonly knex;
+    constructor(knex: any);
     index(): Promise<any>;
 }

@@ -17,6 +17,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var NestKnexModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NestKnexModule = void 0;
+const nest_knex_connection_provider_1 = require("./nest-knex-connection.provider");
 const common_1 = require("@nestjs/common");
 const nest_knex_service_1 = require("./nest-knex.service");
 const constants_1 = require("./constants");
@@ -74,8 +75,8 @@ let NestKnexModule = NestKnexModule_1 = class NestKnexModule {
 NestKnexModule = NestKnexModule_1 = __decorate([
     common_1.Global(),
     common_1.Module({
-        providers: [nest_knex_service_1.NestKnexService],
-        exports: [nest_knex_service_1.NestKnexService],
+        providers: [nest_knex_service_1.NestKnexService, nest_knex_connection_provider_1.connectionFactory],
+        exports: [nest_knex_service_1.NestKnexService, nest_knex_connection_provider_1.connectionFactory],
     })
 ], NestKnexModule);
 exports.NestKnexModule = NestKnexModule;

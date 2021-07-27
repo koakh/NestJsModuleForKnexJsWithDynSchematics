@@ -1,19 +1,14 @@
+import { connectionFactory } from './nest-knex-connection.provider';
 import { Module, DynamicModule, Provider, Global } from '@nestjs/common';
 import { NestKnexService } from './nest-knex.service';
-import {
-  NEST_KNEX_OPTIONS,
-} from './constants';
-import {
-  NestKnexOptions,
-  NestKnexAsyncOptions,
-  NestKnexOptionsFactory,
-} from './interfaces';
+import { NEST_KNEX_OPTIONS } from './constants';
+import { NestKnexOptions, NestKnexAsyncOptions, NestKnexOptionsFactory, } from './interfaces';
 import { createNestKnexProviders } from './nest-knex.providers';
 
 @Global()
 @Module({
-  providers: [NestKnexService],
-  exports: [NestKnexService],
+  providers: [NestKnexService, connectionFactory],
+  exports: [NestKnexService, connectionFactory],
 })
 export class NestKnexModule {
   /**
@@ -72,11 +67,10 @@ export class NestKnexModule {
 
     // For useExisting...
     return {
-  provide: NEST_KNEX_OPTIONS,
+      provide: NEST_KNEX_OPTIONS,
       useFactory: async (optionsFactory: NestKnexOptionsFactory) =>
         await optionsFactory.createNestKnexOptions(),
       inject: [options.useExisting || options.useClass],
     };
   }
-
- }
+}

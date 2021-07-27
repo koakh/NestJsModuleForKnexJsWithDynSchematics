@@ -26,7 +26,34 @@ let NestKnexClientModule = class NestKnexClientModule {
 NestKnexClientModule = __decorate([
     common_1.Module({
         controllers: [nest_knex_client_controller_1.NestKnexClientController],
-        imports: [nest_knex_module_1.NestKnexModule.register({})],
+        imports: [
+            // NestKnexModule.register({
+            //   client: 'pg',
+            //   connection: {
+            //     host: 'localhost',
+            //     user: 'postgres',
+            //     password: 'example',
+            //     database: 'example',
+            //     port: 5432,
+            //   },
+            // }),
+            // Dynamic Registration (with a Config Factory)
+            nest_knex_module_1.NestKnexModule.registerAsync({
+                useFactory: () => {
+                    return {
+                        debug: false,
+                        client: 'pg',
+                        connection: {
+                            host: 'localhost',
+                            user: 'postgres',
+                            password: 'example',
+                            database: 'example',
+                            port: 5432,
+                        },
+                    };
+                },
+            }),
+        ],
     })
 ], NestKnexClientModule);
 exports.NestKnexClientModule = NestKnexClientModule;

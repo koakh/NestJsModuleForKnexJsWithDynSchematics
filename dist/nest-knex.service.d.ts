@@ -1,17 +1,12 @@
 import { NestKnexOptions } from './interfaces';
-/**
- * Sample interface for NestKnexService
- *
- * Customize this as needed to describe the NestKnexService
- *
- */
 interface INestKnexService {
-    test(): Promise<any>;
+    getKnex(): any;
 }
 export declare class NestKnexService implements INestKnexService {
-    private _NestKnexOptions;
+    private _nestKnexOptions;
     private readonly logger;
-    constructor(_NestKnexOptions: NestKnexOptions);
-    test(): Promise<any>;
+    private _knexConnection;
+    constructor(_nestKnexOptions: NestKnexOptions);
+    getKnex(): any;
 }
 export {};
